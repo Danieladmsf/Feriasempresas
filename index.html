@@ -2,217 +2,303 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Colaboradores e Calendário</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Férias</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-        body {
-            background: #f5f5f5;
-            padding: 1rem;
-            font-size: 14px;
-        }
+body {
+    background: #f5f5f5;
+    padding: 1rem;
+    font-size: 14px;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 1rem;
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 1rem;
+}
 
-        .employee-panel {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+.employee-panel {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
-        .employee-list {
-            list-style: none;
-        }
+.employee-list {
+    list-style: none;
+}
 
-        .employee-item {
-            padding: 0.5rem;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-        }
+.employee-item {
+    padding: 0.8rem;
+    border-bottom: 1px solid #eee;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    line-height: 1.4;
+}
 
-        .employee-item:last-child {
-            border-bottom: none;
-        }
+.employee-name {
+    font-weight: bold;
+    color: #333;
+}
 
-        .vacation-info {
-            font-size: 0.8rem;
-            color: #666;
-            margin-left: 0.5rem;
-        }
+.employee-details {
+    font-size: 0.9rem;
+    color: #666;
+}
 
-        .calendar-container {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 1rem;
-        }
+.special-status {
+    color: #e63946;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 0.3rem;
+    padding: 2px 5px;
+    background: #feeaea;
+    border-radius: 3px;
+    display: inline-block;
+}
 
-        .calendar {
-            width: 100%;
-            border-collapse: collapse;
-        }
+.calendar-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 1rem;
+}
 
-        .calendar th {
-            background: #f8f9fa;
-            padding: 0.8rem;
-            text-align: center;
-            border: 1px solid #dee2e6;
-            font-size: 0.9rem;
-        }
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-        .calendar td {
-            border: 1px solid #dee2e6;
-            padding: 0.8rem;
-            height: 90px;
-            vertical-align: top;
-            position: relative;
-        }
+.calendar th {
+    background: #f8f9fa;
+    padding: 0.8rem;
+    text-align: center;
+    border: 1px solid #dee2e6;
+    font-size: 0.9rem;
+}
 
-        .date {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
+.calendar td {
+    border: 1px solid #dee2e6;
+    padding: 0.8rem;
+    height: 100px;
+    vertical-align: top;
+    position: relative;
+}
 
-        .employee-count {
-            position: absolute;
-            bottom: 3px;
-            right: 3px;
-            background: #007bff;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-        }
+.date {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
 
-        .tooltip {
-            display: none;
-            position: absolute;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 8px;
-            border-radius: 4px;
-            z-index: 1000;
-            font-size: 0.8rem;
-            max-width: 180px;
-            white-space: pre-line;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+.vacation-start {
+    position: absolute;
+    top: 25px;
+    left: 3px;
+    color: #28a745;
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: #e8f5e9;
+    white-space: nowrap;
+}
 
-        td:hover .tooltip {
-            display: block;
-        }
+.vacation-end {
+    position: absolute;
+    top: 45px;
+    left: 3px;
+    color: #dc3545;
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: #feeaea;
+    white-space: nowrap;
+}
 
-        .weekend {
-            background: #f8f9fa;
-        }
+.maternity-leave-indicator {
+    position: absolute;
+    top: 65px;
+    left: 3px;
+    color: #856404;
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: #fff3cd;
+    white-space: nowrap;
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
+.tooltip {
+    display: none;
+    position: absolute;
+    background: rgba(0,0,0,0.9);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    z-index: 1000;
+    font-size: 0.8rem;
+    max-width: 250px;
+    white-space: pre-line;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
 
-        .month-selector {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+td:hover .tooltip {
+    display: block;
+}
 
-        .month-selector button {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
 
-        .month-selector button:hover {
-            background: #0056b3;
-        }
+.month-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
 
-        h2 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
+.month-selector button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
 
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            
-            .employee-panel {
-                margin-bottom: 1rem;
-            }
-        }
-    </style>
+.month-selector button:hover {
+    background: #0056b3;
+}
+
+.employee-count {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    background: #007bff;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+}
+
+h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.weekend {
+    background: #f8f9fa;
+}
+
+.today {
+    background: #e8f5e9;
+}
+
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    .employee-panel {
+        margin-bottom: 1rem;
+    }
+}
+</style>
 </head>
 <body>
     <div class="container">
+        <!-- Painel de Funcionários -->
         <div class="employee-panel">
             <h2>Colaboradores</h2>
             <ul class="employee-list">
                 <li class="employee-item">
-                    <span>Bruno Gabriel Albino Arantes</span>
-                    <span class="vacation-info">15/12/2024 - 29 dias</span>
+                    <div class="employee-name">Bruno Gabriel Albino Arantes</div>
+                    <div class="employee-details">
+                        <div>Férias: 15/12/2024 - 29 dias</div>
+                        <div>Retorno: 13/01/2025</div>
+                    </div>
                 </li>
                 <li class="employee-item">
-                    <span>Maria dos Passos</span>
-                    <span class="vacation-info">18/12/2024 - 30 dias</span>
+                    <div class="employee-name">Maria dos Passos</div>
+                    <div class="employee-details">
+                        <div>Férias: 18/12/2024 - 30 dias</div>
+                        <div>Retorno: 17/01/2025</div>
+                    </div>
                 </li>
                 <li class="employee-item">
-                    <span>Josineide Goncalves Da Silva</span>
-                    <span class="vacation-info">31/08/2025 - 30 dias</span>
+                    <div class="employee-name">Tais Camilo De Morais Abreu</div>
+                    <div class="employee-details">
+                        <div>Licença Maternidade: 31/10/2024 - 28/02/2024</div>
+                        <div>Férias: 28/02/2025 - 30 dias</div>
+                        <div>Retorno: 30/03/2025</div>
+                    </div>
+                    <div class="special-status">Em Licença Maternidade</div>
                 </li>
                 <li class="employee-item">
-                    <span>Sara Eugenio Alves</span>
-                    <span class="vacation-info">03/01/2025 - 20 dias</span>
+                    <div class="employee-name">Josineide Goncalves Da Silva</div>
+                    <div class="employee-details">
+                        <div>Férias: 31/08/2025 - 30 dias</div>
+                        <div>Retorno: 30/09/2025</div>
+                    </div>
                 </li>
                 <li class="employee-item">
-                    <span>Sandra Maria Gomes</span>
-                    <span class="vacation-info">27/05/2025 - 5 dias</span>
+                    <div class="employee-name">Sara Eugenio Alves</div>
+                    <div class="employee-details">
+                        <div>Férias: 03/01/2025 - 20 dias</div>
+                        <div>Retorno: 23/01/2025</div>
+                    </div>
                 </li>
                 <li class="employee-item">
-                    <span>Tais Camilo De Morais Abreu</span>
-                    <span class="vacation-info">28/02/2025 - 30 dias</span>
+                    <div class="employee-name">Sandra Maria Gomes</div>
+                    <div class="employee-details">
+                        <div>Férias: 27/05/2025 - 5 dias</div>
+                        <div>Retorno: 01/06/2025</div>
+                    </div>
                 </li>
                 <li class="employee-item">
-                    <span>Jonatas De Souza Neves Barbetti</span>
-                    <span class="vacation-info">01/05/2025 - 17,5 dias</span>
+                    <div class="employee-name">Jonatas De Souza Neves Barbetti</div>
+                    <div class="employee-details">
+                        <div>Férias: 01/05/2025 - 17,5 dias</div>
+                        <div>Retorno: 18/05/2025</div>
+                    </div>
                 </li>
                 <li class="employee-item">
-                    <span>Kathlenn Santos De Araujo</span>
-                    <span class="vacation-info">14/04/2025 - 20 dias</span>
+                    <div class="employee-name">Kathlenn Santos De Araujo</div>
+                    <div class="employee-details">
+                        <div>Férias: 14/04/2025 - 20 dias</div>
+                        <div>Retorno: 04/05/2025</div>
+                    </div>
                 </li>
                 <li class="employee-item">
-                    <span>Dalva Odete Cassiano De Padua</span>
-                    <span class="vacation-info">27/05/2025 - 15 dias</span>
+                    <div class="employee-name">Dalva Odete Cassiano De Padua</div>
+                    <div class="employee-details">
+                        <div>Férias: 27/05/2025 - 15 dias</div>
+                        <div>Retorno: 11/06/2025</div>
+                    </div>
                 </li>
             </ul>
         </div>
 
+        <!-- Calendário -->
         <div class="calendar-container">
             <div class="header">
                 <div class="month-selector">
@@ -239,103 +325,203 @@
     </div>
 
     <script>
-        const employees = [
-            { name: "Bruno Gabriel Albino Arantes", startDate: "2024-12-15", days: 29 },
-            { name: "Maria dos Passos", startDate: "2024-12-18", days: 30 },
-            { name: "Josineide Goncalves Da Silva", startDate: "2025-08-31", days: 30 },
-            { name: "Sara Eugenio Alves", startDate: "2025-01-03", days: 20 },
-            { name: "Sandra Maria Gomes", startDate: "2025-05-27", days: 5 },
-            { name: "Tais Camilo De Morais Abreu", startDate: "2025-02-28", days: 30 },
-            { name: "Jonatas De Souza Neves Barbetti", startDate: "2025-05-01", days: 17.5 },
-            { name: "Kathlenn Santos De Araujo", startDate: "2025-04-14", days: 20 },
-            { name: "Dalva Odete Cassiano De Padua", startDate: "2025-05-27", days: 15 }
-        ];
+const employees = [
+    { 
+        name: "Bruno Gabriel Albino Arantes", 
+        startDate: "2024-12-15", 
+        days: 29,
+        endDate: "2025-01-13"
+    },
+    { 
+        name: "Maria dos Passos", 
+        startDate: "2024-12-18", 
+        days: 30,
+        endDate: "2025-01-17"
+    },
+    { 
+        name: "Tais Camilo De Morais Abreu",
+        startDate: "2025-02-28", 
+        days: 30,
+        endDate: "2025-03-30",
+        maternityLeave: {
+            start: "2024-10-31",
+            end: "2025-02-28"
+        }
+    },
+    { 
+        name: "Josineide Goncalves Da Silva",
+        startDate: "2025-08-31", 
+        days: 30,
+        endDate: "2025-09-30"
+    },
+    { 
+        name: "Sara Eugenio Alves",
+        startDate: "2025-01-03", 
+        days: 20,
+        endDate: "2025-01-23"
+    },
+    { 
+        name: "Sandra Maria Gomes",
+        startDate: "2025-05-27", 
+        days: 5,
+        endDate: "2025-06-01"
+    },
+    { 
+        name: "Jonatas De Souza Neves Barbetti",
+        startDate: "2025-05-01", 
+        days: 17.5,
+        endDate: "2025-05-18"
+    },
+    { 
+        name: "Kathlenn Santos De Araujo",
+        startDate: "2025-04-14", 
+        days: 20,
+        endDate: "2025-05-04"
+    },
+    { 
+        name: "Dalva Odete Cassiano De Padua",
+        startDate: "2025-05-27", 
+        days: 15,
+        endDate: "2025-06-11"
+    }
+];
 
-        let currentDate = new Date(2024, 11, 1); // Dezembro 2024
+let currentDate = new Date(2024, 11, 1);
 
-        function createCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            
-            document.getElementById('currentMonth').textContent = 
-                firstDay.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+function createCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    
+    document.getElementById('currentMonth').textContent = 
+        firstDay.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
 
-            const calendarBody = document.getElementById('calendarBody');
-            calendarBody.innerHTML = '';
+    const calendarBody = document.getElementById('calendarBody');
+    calendarBody.innerHTML = '';
 
-            let date = 1;
-            for (let i = 0; i < 6; i++) {
-                const row = document.createElement('tr');
-                
-                for (let j = 0; j < 7; j++) {
-                    if (i === 0 && j < firstDay.getDay()) {
-                        const cell = document.createElement('td');
-                        row.appendChild(cell);
-                        continue;
-                    }
-                    if (date > lastDay.getDate()) break;
-                    
-                    const cell = document.createElement('td');
-                    const currentCellDate = new Date(year, month, date);
-                    
-                    // Weekend class
-                    if (j === 0 || j === 6) cell.classList.add('weekend');
-                    
-                    // Date display
-                    const dateDiv = document.createElement('div');
-                    dateDiv.className = 'date';
-                    dateDiv.textContent = date;
-                    cell.appendChild(dateDiv);
-                    
-                    // Get employees on vacation for this date
-                    const employeesOnVacation = getEmployeesOnVacation(currentCellDate);
-                    
-                    if (employeesOnVacation.length > 0) {
-                        // Employee count badge
-                        const countDiv = document.createElement('div');
-                        countDiv.className = 'employee-count';
-                        countDiv.textContent = `${employeesOnVacation.length} Func.`;
-                        cell.appendChild(countDiv);
-                        
-                        // Tooltip with employee names
-                        const tooltip = document.createElement('div');
-                        tooltip.className = 'tooltip';
-                        tooltip.textContent = employeesOnVacation.join('\n');
-                        cell.appendChild(tooltip);
-                    }
-                    
-                    row.appendChild(cell);
-                    date++;
-                }
-                calendarBody.appendChild(row);
-                if (date > lastDay.getDate()) break;
+    let date = 1;
+    for (let i = 0; i < 6; i++) {
+        const row = document.createElement('tr');
+        
+        for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < firstDay.getDay()) {
+                const cell = document.createElement('td');
+                row.appendChild(cell);
+                continue;
             }
-        }
-
-        function getEmployeesOnVacation(date) {
-            return employees.filter(emp => {
+            if (date > lastDay.getDate()) break;
+            
+            const cell = document.createElement('td');
+            const currentCellDate = new Date(year, month, date);
+            
+            if (j === 0 || j === 6) cell.classList.add('weekend');
+            
+            const dateDiv = document.createElement('div');
+            dateDiv.className = 'date';
+            dateDiv.textContent = date;
+            cell.appendChild(dateDiv);
+            
+            // Verificar início de férias
+            const startingVacations = employees.filter(emp => {
                 const startDate = new Date(emp.startDate);
-                const endDate = new Date(startDate);
-                endDate.setDate(endDate.getDate() + emp.days);
-                return date >= startDate && date <= endDate;
-            }).map(emp => emp.name);
-        }
+                return startDate.getDate() === date && 
+                       startDate.getMonth() === month && 
+                       startDate.getFullYear() === year;
+            });
 
-        function previousMonth() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            createCalendar();
-        }
+            // Verificar fim de férias
+            const endingVacations = employees.filter(emp => {
+                const endDate = new Date(emp.endDate);
+                return endDate.getDate() === date && 
+                       endDate.getMonth() === month && 
+                       endDate.getFullYear() === year;
+            });
 
-        function nextMonth() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            createCalendar();
-        }
+            // Verificar licença maternidade
+            const maternityLeaves = employees.filter(emp => {
+                if (!emp.maternityLeave) return false;
+                
+                const startDate = new Date(emp.maternityLeave.start);
+                const endDate = new Date(emp.maternityLeave.end);
+                
+                return (startDate.getDate() === date && 
+                        startDate.getMonth() === month && 
+                        startDate.getFullYear() === year) ||
+                       (endDate.getDate() === date && 
+                        endDate.getMonth() === month && 
+                        endDate.getFullYear() === year);
+            });
 
-        // Initialize calendar
-        createCalendar();
+            startingVacations.forEach(emp => {
+                const vacationStart = document.createElement('div');
+                vacationStart.className = 'vacation-start';
+                vacationStart.textContent = `Início: ${emp.name}`;
+                cell.appendChild(vacationStart);
+            });
+
+            endingVacations.forEach(emp => {
+                const vacationEnd = document.createElement('div');
+                vacationEnd.className = 'vacation-end';
+                vacationEnd.textContent = `Fim: ${emp.name}`;
+                cell.appendChild(vacationEnd);
+            });
+
+            maternityLeaves.forEach(emp => {
+                const maternityLeaveIndicator = document.createElement('div');
+                maternityLeaveIndicator.className = 'maternity-leave-indicator';
+                const startDate = new Date(emp.maternityLeave.start);
+                const endDate = new Date(emp.maternityLeave.end);
+                if (startDate.getDate() === date && startDate.getMonth() === month && startDate.getFullYear() === year) {
+                    maternityLeaveIndicator.textContent = `Início Licença Maternidade: ${emp.name}`;
+                } else if (endDate.getDate() === date && endDate.getMonth() === month && endDate.getFullYear() === year) {
+                    maternityLeaveIndicator.textContent = `Fim Licença Maternidade: ${emp.name}`;
+                }
+                cell.appendChild(maternityLeaveIndicator);
+            });
+
+            if (startingVacations.length || endingVacations.length || maternityLeaves.length) {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip';
+                let tooltipText = '';
+                startingVacations.forEach(emp => tooltipText += `Início de férias: ${emp.name}\n`);
+                endingVacations.forEach(emp => tooltipText += `Fim de férias: ${emp.name}\n`);
+                maternityLeaves.forEach(emp => {
+                    const startDate = new Date(emp.maternityLeave.start);
+                    const endDate = new Date(emp.maternityLeave.end);
+                    if (startDate.getDate() === date && startDate.getMonth() === month && startDate.getFullYear() === year) {
+                        tooltipText += `Início Licença Maternidade: ${emp.name}\n`;
+                    } else if (endDate.getDate() === date && endDate.getMonth() === month && endDate.getFullYear() === year) {
+                        tooltipText += `Fim Licença Maternidade: ${emp.name}\n`;
+                    }
+                });
+                tooltip.textContent = tooltipText.trim();
+                cell.appendChild(tooltip);
+            }
+
+            if (currentCellDate.toDateString() === new Date().toDateString()) {
+                cell.classList.add('today');
+            }
+            
+            row.appendChild(cell);
+            date++;
+        }
+        calendarBody.appendChild(row);
+    }
+}
+
+function previousMonth() {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    createCalendar();
+}
+
+function nextMonth() {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    createCalendar();
+}
+
+createCalendar();
     </script>
 </body>
 </html>
